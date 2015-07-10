@@ -11,29 +11,25 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace UniversalApp1
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class ImagesView : Page
     {
-        public MainPage()
+        public ImagesView()
         {
             this.InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //wpf页面的跳转
-            ImagesView imageview = new ImagesView();
-            this.Content = imageview;
-            //this.image1.Source = new BitmapImage(new Uri("http://img1.3lian.com/img2012/11/44/d/41.jpg", UriKind.Absolute));
+            
         }
     }
 }
