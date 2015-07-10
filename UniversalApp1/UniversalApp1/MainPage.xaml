@@ -12,6 +12,8 @@
             <TextBlock Margin="10,10" Width="200">
                 <Run Foreground="Blue">Universal App</Run>
             </TextBlock>
+            <Button Margin="0,20" Width="100" Content="Change" Click="Button_Click"/>
+            <Image Source="http://img1.3lian.com/img2012/11/44/d/39.jpg" Width="500" Height="500" Margin="50,80" x:Name="image1"  />
         </Canvas>
     </Grid>
 </Page>
