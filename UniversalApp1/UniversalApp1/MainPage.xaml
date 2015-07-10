@@ -8,6 +8,10 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Canvas Margin="10,10,10,10">
+            <TextBlock Margin="10,10" Width="200">
+                <Run Foreground="Blue">Universal App</Run>
+            </TextBlock>
+        </Canvas>
     </Grid>
 </Page>
