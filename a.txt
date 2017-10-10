@@ -1,1 +1,77 @@
-这是一个测试的文件，没有可以用的东西
+﻿hzpPHENXIE!125789
+
+1. Shuffle 
+The Reducer copies the sorted output from each Mapper using HTTP across the network.
+
+2. Sort 
+The framework merge sorts Reducer inputs by keys (since different Mappers may have output the same key).
+
+The shuffle and sort phases occur simultaneously i.e. while outputs are being fetched they are merged.
+SecondarySort 
+To achieve a secondary sort on the values returned by the value iterator, the application should extend the key with the secondary key and define a grouping comparator. The keys will be sorted using the entire key, but will be grouped using the grouping comparator to decide which keys and values are sent in the same call to reduce.The grouping comparator is specified via Job.setGroupingComparatorClass(Class). The sort order is controlled by Job.setSortComparatorClass(Class).
+For example, say that you want to find duplicate web pages and tag them all with the url of the "best" known example. You would set up the job like: ◦Map Input Key: url
+◦Map Input Value: document
+◦Map Output Key: document checksum, url pagerank
+◦Map Output Value: url
+◦Partitioner: by checksum
+◦OutputKeyComparator: by checksum and then decreasing pagerank
+◦OutputValueGroupingComparator: by checksum
+
+3. Reduce 
+In this phase the reduce(Object, Iterable, org.apache.hadoop.mapreduce.Reducer.Context) method is called for each <key, (collection of values)> in the sorted inputs.
+
+The output of the reduce task is typically written to a RecordWriter via Context.write(Object, Object).
+
+
+The output of the Reducer is not re-sorted.
+
+Example:
+
+
+ public class IntSumReducer<Key> extends Reducer<Key,IntWritable,
+                                                 Key,IntWritable> {
+   private IntWritable result = new IntWritable();
+ 
+   public void reduce(Key key, Iterable<IntWritable> values,
+                      Context context) throws IOException, InterruptedException {
+     int sum = 0;
+     for (IntWritable val : values) {
+       sum += val.get();
+     }
+     result.set(sum);
+     context.write(key, result);
+   }
+ }
+ 
+See Also:MapperPartitioner
+
+
+ 读取输入的HDFS文件内容，解析成key、value对。对输入文件的每一行，解析成key、value对。每一个键值对调用一次map函数。
+　　1.2 实现自己的逻辑，对输入的key、value处理，转换成新的key、value输出。
+　　1.3 对输出的key、value进行分区。
+　　1.4 对不同分区的数据，按照key进行排序（按照key进行排序）、分组（按照key分组，把相同key的value放到一个集合中）。
+　　1.5 (可选)分组后的数据进行归约（归约：简单的讲就是把大的数据集合变成小的数据集合，例如加减法）
+
+``````````````
+
+ 
+
+　　4.reduce任务处理
+　　2.1 对多个map任务的输出，按照不同的分区，通过网络copy到不同的reduce节点。
+　　2.2 覆盖reduce函数，实现自己的逻辑，对输入的key和values处理，转换成新的key，value输出。
+　　2.3 把reduce的输出保存到HDFS中。
+
+
+   如果指定输入文件的格式是TextInputFormat
+那么默认的区分不同key/value对的分隔符是\n
+
+我们可以通过"textinputformat.record.delimiter"参数来指定自己想要的分隔符
+比如说
+Configuration conf =new Configuration();
+conf.set("textinputformat.record.delimiter","[DEBUG]");
+那么现在不同key/value对之间的分隔符是"[DEBUG]"字符串
+
+
+//设置MapReduce的输出的分隔符为逗号  
+conf.set("mapred.textoutputformat.ignoreseparator", "true");  
+conf.set("mapred.textoutputformat.separator", ",");  
