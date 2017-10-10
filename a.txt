@@ -1,4 +1,4 @@
-﻿hzpPHENXIE!125789
+﻿
 
 1. Shuffle 
 The Reducer copies the sorted output from each Mapper using HTTP across the network.
